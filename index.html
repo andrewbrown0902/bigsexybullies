@@ -1040,6 +1040,19 @@ Delivery details are discussed clearly and transparently during the inquiry proc
     const form = document.getElementById("puppyForm");
     if (!form) return;
 
+    // ✅ ADD THIS BLOCK
+    window.dataLayer = window.dataLayer || [];
+    function pushLeadSubmitSuccess(payload) {
+      window.dataLayer.push({
+        event: "lead_submit_success",
+        lead_email: payload.email || "",
+        lead_phone: payload.phone || "",
+        lead_city: payload.city || "",
+        lead_state: payload.state || "",
+        puppy_interest: payload.puppy_interest || ""
+      });
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -1072,6 +1085,9 @@ Delivery details are discussed clearly and transparently during the inquiry proc
 
         if (!res.ok) throw new Error("Webhook failed");
 
+        // ✅ ADD THIS LINE (fire ONLY on success)
+        pushLeadSubmitSuccess(payload);
+
         alert("✅ Application submitted! We’ll reach out within 24 hours.");
 
         form.reset();
@@ -1086,6 +1102,7 @@ Delivery details are discussed clearly and transparently during the inquiry proc
     });
   })();
 </script>
+
 </div>
 <div class="border-t border-slate-800 pt-12 flex flex-col md:flex-row items-center justify-between text-slate-500 text-sm">
 <div class="flex items-center space-x-6 mb-8 md:mb-0">
