@@ -60,7 +60,18 @@
       <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
         <div class="flex items-center space-x-2">
           <!-- UPDATED: header logo -->
-          <img alt="Big Sexy Bullies Logo" class="h-12 w-auto" src="assets/bsb.logo.jpeg" />
+          <img
+  alt="Big Sexy Bullies Logo"
+  src="assets/bsb.logo.jpeg"
+  class="
+    w-auto
+    h-10        /* mobile */
+    sm:h-12     /* small tablets */
+    md:h-14     /* desktop */
+    lg:h-16     /* large desktop */
+  "
+/>
+
         </div>
         <div class="flex items-center space-x-6 text-white">
           <a class="hidden md:block font-medium hover:text-primary transition-colors" href="#litter">Current Litter</a>
@@ -610,11 +621,11 @@
       <!-- Avatar Stack -->
       <div class="flex -space-x-4">
         <img class="w-12 h-12 rounded-full border-2 border-white object-cover"
-             src="assets/customer0.png" alt="Customer photo" />
+             src="assets/customer.0.png" alt="Customer photo" />
         <img class="w-12 h-12 rounded-full border-2 border-white object-cover"
              src="assets/customer1.png" alt="Customer photo" />
         <img class="w-12 h-12 rounded-full border-2 border-white object-cover"
-             src="assets/customer2.png" alt="Customer photo" />
+             src="assets/customer.2.png" alt="Customer photo" />
         <div class="w-12 h-12 rounded-full border-2 border-white bg-primary flex items-center justify-center text-white text-xs font-bold">
           +50
         </div>
