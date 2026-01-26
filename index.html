@@ -623,7 +623,7 @@
         <img class="w-12 h-12 rounded-full border-2 border-white object-cover"
              src="assets/customer.0.png" alt="Customer photo" />
         <img class="w-12 h-12 rounded-full border-2 border-white object-cover"
-             src="assets/customer1.png" alt="Customer photo" />
+             src="assets/customer.1.png" alt="Customer photo" />
         <img class="w-12 h-12 rounded-full border-2 border-white object-cover"
              src="assets/customer.2.png" alt="Customer photo" />
         <div class="w-12 h-12 rounded-full border-2 border-white bg-primary flex items-center justify-center text-white text-xs font-bold">
@@ -1020,7 +1020,59 @@ Delivery details are discussed clearly and transparently during the inquiry proc
     goToStep(1);
   })();
 </script>
+<script>
+  (function () {
+    const GHL_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/VZ3EfPOTS1Iu5941epvY/webhook-trigger/o665sAivm1lzOz7e9vmh";
 
+    const form = document.getElementById("puppyForm");
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const fd = new FormData(form);
+
+      const puppyInterests = [];
+      form.querySelectorAll('input[name="puppy_interest"]:checked')
+        .forEach(cb => puppyInterests.push(cb.value));
+
+      const payload = {
+        first_name: fd.get("first_name") || "",
+        last_name: fd.get("last_name") || "",
+        phone: fd.get("phone") || "",
+        email: fd.get("email") || "",
+        city: fd.get("city") || "",
+        state: fd.get("state") || "",
+        breed_experience: fd.get("breed_experience") || "",
+        puppy_interest: puppyInterests.join(", "),
+        comments: fd.get("comments") || "",
+        page_url: window.location.href,
+        submitted_at: new Date().toISOString()
+      };
+
+      try {
+        const res = await fetch(GHL_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error("Webhook failed");
+
+        alert("✅ Application submitted! We’ll reach out within 24 hours.");
+
+        form.reset();
+        document.getElementById("step2").classList.add("hidden");
+        document.getElementById("step1").classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+      } catch (err) {
+        console.error(err);
+        alert("⚠️ Submission failed. Please try again or contact us directly.");
+      }
+    });
+  })();
+</script>
 </div>
 <div class="border-t border-slate-800 pt-12 flex flex-col md:flex-row items-center justify-between text-slate-500 text-sm">
 <div class="flex items-center space-x-6 mb-8 md:mb-0">
